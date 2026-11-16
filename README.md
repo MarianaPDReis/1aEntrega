@@ -3,13 +3,13 @@
 
 **Elementos do grupo:** Mariana Pinheiro dos Reis | Número | Email
 
-**Nome do projeto:** CultivaInteligente??
+**Nome do projeto:** Recolha e Tratamento de dados de sensores IoT | **CultivaInteligente** 
 
-**Unidades Curriculares incluidas:** Engenharia de software
+**Unidades Curriculares incluídas:** Engenharia de software
 
-**Palavras-chave:** Agricultura, ...
+**Palavras-chave:** Estufa Inteligente, Monitorização Agrícola, Automação de Cultivos
 
-**Link para reportorio do GitHub:** (https://github.com/MarianaPDReis/Documenta-o-1aEntrega)
+**Link para reportório do GitHub:** (https://github.com/MarianaPDReis/Documenta-o-1aEntrega)
 
 ## Introdução 
 O presente documento tem como objetivo apresentar a especificação dos requisitos funcionais e não funcionais de um sistema de monitorização e controlo de estufas agrícolas inteligentes. 
