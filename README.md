@@ -51,8 +51,8 @@ Para ilustrar o comportamento esperado do sistema e o fluxo de interação dos u
 **Guião 1: Monitorização e Resposta a Alerta de Solo Seco** 
 
 1. O agricultor acede à aplicação web **CultivaInteligente** através do seu smartphone e inicia sessão com as suas credenciais (**RF01**).
-2. No painel principal (*dashboard*), verifica que a "Estufa 1 (Tomates)" apresenta uma temperatura de $26\,^\circ\text{C}$ e humidade do solo de $45\%$ (**RF05**).
-3. Durante a tarde, o sensor de humidade do solo envia uma leitura de $24\%$ para o servidor (**RF03**), valor inferior ao limite mínimo configurado de $30\%$ (**RF07**).
+2. No painel principal (*dashboard*), verifica que a "Estufa 1 (Tomates)" apresenta uma temperatura de 26 ºC e humidade do solo de 45% (**RF05**).
+3. Durante a tarde, o sensor de humidade do solo envia uma leitura de 24% para o servidor (**RF03**), valor inferior ao limite mínimo configurado de 30% (**RF07**).
 4. O sistema deteta a anomalia, regista o evento na base de dados e envia imediatamente uma notificação na aplicação e um alerta por e-mail ao agricultor (**RF08**).
 5. O agricultor abre o alerta, consulta o gráfico das últimas 24 horas para confirmar a descida acentuada da humidade (**RF06**) e seleciona a opção "Ativar Rega" na interface web (**RF09**).
 6. O sistema envia o comando ao microcontrolador da estufa, que liga a eletroválvula de rega e atualiza o estado no painel para "Rega Ativa".
@@ -60,14 +60,39 @@ Para ilustrar o comportamento esperado do sistema e o fluxo de interação dos u
 **Guião 2: Configuração de Automação e Exportação de Dados** 
 
 1. O agricultor acede às definições da "Estufa 2 (Morangos)" na plataforma web.
-2. Ajusta o limiar de temperatura máxima para $28\,^\circ\text{C}$ e ativa a funcionalidade "Modo Automático de Rega" (**RF07**, **RF10**).
+2. Ajusta o limiar de temperatura máxima para 28 ºC e ativa a funcionalidade "Modo Automático de Rega" (**RF07**, **RF10**).
 3. No final do mês, o agricultor acede à secção de "Relatórios", seleciona o intervalo correspondente aos últimos 30 dias e clica em "Exportar CSV" (**RF11**).
 4. O sistema gera e descarrega um ficheiro estruturado com as médias diárias de temperatura e humidade para arquivo e análise da produção.
 
-## Requisitos funcionais 
+## 4. Requisitos Funcionais
 
-Fazes uma lista de tudo aquilo que a aplicação deverá permitir fazer. 
+Os Requisitos Funcionais descrevem as funcionalidades, comportamentos e regras de negócio que o sistema deve disponibilizar aos utilizadores e componentes externos.
 
-## Requisitos não funcionais 
+| ID | Nome do Requisito | Descrição Detalhada | Prioridade |
+| :--- | :--- | :--- | :--- |
+| **RF01** | **Autenticação de Utilizadores** | O sistema deve permitir que os utilizadores registados iniciem sessão na plataforma web através de endereço de e-mail e palavra-passe. | Alta |
+| **RF02** | **Registo de Dispositivos IoT** | O utilizador deve poder associar um novo nó sensor/atuador (ESP32) à sua conta e atribuir-lhe a identificação de uma estufa específica. | Alta |
+| **RF03** | **Recolha Periódica de Dados** | O sistema (via API REST) deve receber e processar as leituras de temperatura, humidade do ar e humidade do solo enviadas pelos sensores a cada 5 minutos. | Alta |
+| **RF04** | **Persistência de Dados** | O sistema deve armazenar todas as leituras recebidas na base de dados relacional, associando cada registo à data, hora e identificador do sensor. | Alta |
+| **RF05** | **Dashboard em Tempo Real** | O utilizador deve visualizar um painel principal com os valores mais recentes de temperatura, humidade do ar e humidade do solo de cada estufa, bem como o estado atual dos atuadores (ligado/desligado). | Alta |
+| **RF06** | **Consulta de Histórico** | O utilizador deve poder consultar o histórico de medições através de gráficos temporais, filtrando os dados por dia, semana ou mês. | Média |
+| **RF07** | **Configuração de Limiares** | O utilizador deve poder definir valores mínimos e máximos aceitáveis (ex: humidade mínima do solo de 30%, temperatura máxima de $32\,^\circ\text{C}$) para cada estufa. | Alta |
+| **RF08** | **Sistema de Alertas Automáticos** | Sempre que uma leitura ultrapassar os limiares definidos no RF07, o sistema deve gerar uma notificação na plataforma web e enviar um alerta por e-mail ao utilizador. | Alta |
+| **RF09** | **Atuação Manual Remota** | O utilizador deve poder ligar ou desligar manualmente o sistema de rega e o sistema de ventilação através de controlos na interface web. | Média |
+| **RF10** | **Automação de Rega** | Quando ativado o modo automático pelo utilizador, o sistema deve acionar a rega automaticamente caso a humidade do solo desça abaixo do limite mínimo, desligando-a assim que o valor ideal seja restabelecido. | Média |
+| **RF11** | **Exportação de Relatórios** | O utilizador deve poder exportar os dados históricos de um determinado período em formato CSV ou PDF para análise externa. | Baixa |
 
-Fazes uma lista das características que a aplicação deverá cumprir. 
+## 5. Requisitos Não Funcionais
+
+Os Requisitos Não Funcionais definem os critérios de qualidade, desempenho, segurança e restrições técnicas que o software deve cumprir.
+
+| ID | Categoria | Descrição Detalhada | Critério de Aceitação / Métrica |
+| :--- | :--- | :--- | :--- |
+| **RNF01** | **Desempenho** | O carregamento do painel principal e a atualização dos gráficos históricos devem ser rápidos para garantir uma boa experiência de utilização. | Tempo de resposta inferior a $2\text{ segundos}$ para $95\%$ dos pedidos. |
+| **RNF02** | **Segurança (Comunicação)** | Toda a comunicação entre os dispositivos IoT, o servidor backend e o navegador do utilizador deve ser cifrada. | Utilização obrigatória do protocolo HTTPS (TLS 1.2 ou superior). |
+| **RNF03** | **Segurança (Dados)** | As palavras-passe dos utilizadores não podem ser armazenadas em texto limpo na base de dados. | Utilização de algoritmos de *hashing* seguros (ex: bcrypt ou Argon2). |
+| **RNF04** | **Segurança (API)** | Apenas dispositivos autorizados podem submeter dados de sensores para a API REST. | Autenticação via *API Key* ou *Token JWT* em cada pedido `POST`. |
+| **RNF05** | **Disponibilidade** | O servidor de recolha de dados e a base de dados devem operar de forma contínua para evitar a perda de leituras ambientais. | Disponibilidade mínima de $99{,}5\%$ ao longo do mês. |
+| **RNF06** | **Usabilidade e Responsividade** | A interface web deve adaptar-se a diferentes tamanhos de ecrã, permitindo a gestão tanto em computador como em smartphone no terreno. | Compatibilidade total com resoluções desde $360\text{px}$ (mobile) até $1920\text{px}$ (desktop). |
+| **RNF07** | **Tolerância a Falhas** | Caso a ligação Wi-Fi da estufa falhe temporariamente, o sistema não deve perder a consistência dos dados quando a ligação for reposta. | O servidor deve aceitar pacotes com *timestamp* retroativo enviados em lote após reconexão. |
+| **RNF08** | **Manutenibilidade** | O código-fonte do backend e frontend deve seguir boas práticas de arquitetura modular e estar devidamente documentado. | Documentação da API via Swagger/OpenAPI e repositório versionado em Git. |
