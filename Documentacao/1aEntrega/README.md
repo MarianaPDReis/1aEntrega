@@ -1,7 +1,7 @@
 ## Faculdade de Design, Tecnologia e Comunicação
 **Universidade Europeia**
 
-**Elementos do grupo:** Mariana Pinheiro dos Reis | Número | Email
+**Elementos do grupo:** Mariana Pinheiro dos Reis | 20262615 | 20262615@iade.pt
 
 **Nome do projeto:** Recolha e Tratamento de dados de sensores IoT | **CultivaInteligente** 
 
