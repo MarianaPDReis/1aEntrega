@@ -64,19 +64,19 @@ Para ilustrar o comportamento esperado do sistema e o fluxo de interação dos u
 3. No final do mês, o agricultor acede à secção de "Relatórios", seleciona o intervalo correspondente aos últimos 30 dias e clica em "Exportar CSV" (**RF11**).
 4. O sistema gera e descarrega um ficheiro estruturado com as médias diárias de temperatura e humidade para arquivo e análise da produção.
 
-## 4. Requisitos Funcionais
+## Requisitos Funcionais
 
 Os Requisitos Funcionais descrevem as funcionalidades, comportamentos e regras de negócio que o sistema deve disponibilizar aos utilizadores e componentes externos.
 
 | ID | Nome do Requisito | Descrição Detalhada | Prioridade |
 | :--- | :--- | :--- | :--- |
 | **RF01** | **Autenticação de Utilizadores** | O sistema deve permitir que os utilizadores registados iniciem sessão na plataforma web através de endereço de e-mail e palavra-passe. | Alta |
-| **RF02** | **Registo de Dispositivos IoT** | O utilizador deve poder associar um novo nó sensor/atuador (ESP32) à sua conta e atribuir-lhe a identificação de uma estufa específica. | Alta |
-| **RF03** | **Recolha Periódica de Dados** | O sistema (via API REST) deve receber e processar as leituras de temperatura, humidade do ar e humidade do solo enviadas pelos sensores a cada 5 minutos. | Alta |
-| **RF04** | **Persistência de Dados** | O sistema deve armazenar todas as leituras recebidas na base de dados relacional, associando cada registo à data, hora e identificador do sensor. | Alta |
+| **RF02** | **Registo de Dispositivos IoT** | O utilizador deve poder associar um novo sensor à sua conta e atribuir-lhe a identificação de uma estufa específica. | Alta |
+| **RF03** | **Recolha Periódica de Dados** | O sistema deve receber e processar as leituras de temperatura, humidade do ar e humidade do solo enviadas pelos sensores a cada 5 minutos. | Alta |
+| **RF04** | **Persistência de Dados** | O sistema deve armazenar todas as leituras recebidas na base de dados, associando cada registo à data, hora e identificador do sensor. | Alta |
 | **RF05** | **Dashboard em Tempo Real** | O utilizador deve visualizar um painel principal com os valores mais recentes de temperatura, humidade do ar e humidade do solo de cada estufa, bem como o estado atual dos atuadores (ligado/desligado). | Alta |
 | **RF06** | **Consulta de Histórico** | O utilizador deve poder consultar o histórico de medições através de gráficos temporais, filtrando os dados por dia, semana ou mês. | Média |
-| **RF07** | **Configuração de Limiares** | O utilizador deve poder definir valores mínimos e máximos aceitáveis (ex: humidade mínima do solo de 30%, temperatura máxima de $32\,^\circ\text{C}$) para cada estufa. | Alta |
+| **RF07** | **Configuração de Limiares** | O utilizador deve poder definir valores mínimos e máximos aceitáveis para cada estufa. | Alta |
 | **RF08** | **Sistema de Alertas Automáticos** | Sempre que uma leitura ultrapassar os limiares definidos no RF07, o sistema deve gerar uma notificação na plataforma web e enviar um alerta por e-mail ao utilizador. | Alta |
 | **RF09** | **Atuação Manual Remota** | O utilizador deve poder ligar ou desligar manualmente o sistema de rega e o sistema de ventilação através de controlos na interface web. | Média |
 | **RF10** | **Automação de Rega** | Quando ativado o modo automático pelo utilizador, o sistema deve acionar a rega automaticamente caso a humidade do solo desça abaixo do limite mínimo, desligando-a assim que o valor ideal seja restabelecido. | Média |
@@ -88,11 +88,11 @@ Os Requisitos Não Funcionais definem os critérios de qualidade, desempenho, se
 
 | ID | Categoria | Descrição Detalhada | Critério de Aceitação / Métrica |
 | :--- | :--- | :--- | :--- |
-| **RNF01** | **Desempenho** | O carregamento do painel principal e a atualização dos gráficos históricos devem ser rápidos para garantir uma boa experiência de utilização. | Tempo de resposta inferior a $2\text{ segundos}$ para $95\%$ dos pedidos. |
+| **RNF01** | **Desempenho** | O carregamento do painel principal e a atualização dos gráficos históricos devem ser rápidos para garantir uma boa experiência de utilização. | Tempo de resposta inferior a 2 segundos para 95% dos pedidos. |
 | **RNF02** | **Segurança (Comunicação)** | Toda a comunicação entre os dispositivos IoT, o servidor backend e o navegador do utilizador deve ser cifrada. | Utilização obrigatória do protocolo HTTPS (TLS 1.2 ou superior). |
 | **RNF03** | **Segurança (Dados)** | As palavras-passe dos utilizadores não podem ser armazenadas em texto limpo na base de dados. | Utilização de algoritmos de *hashing* seguros (ex: bcrypt ou Argon2). |
 | **RNF04** | **Segurança (API)** | Apenas dispositivos autorizados podem submeter dados de sensores para a API REST. | Autenticação via *API Key* ou *Token JWT* em cada pedido `POST`. |
-| **RNF05** | **Disponibilidade** | O servidor de recolha de dados e a base de dados devem operar de forma contínua para evitar a perda de leituras ambientais. | Disponibilidade mínima de $99{,}5\%$ ao longo do mês. |
-| **RNF06** | **Usabilidade e Responsividade** | A interface web deve adaptar-se a diferentes tamanhos de ecrã, permitindo a gestão tanto em computador como em smartphone no terreno. | Compatibilidade total com resoluções desde $360\text{px}$ (mobile) até $1920\text{px}$ (desktop). |
+| **RNF05** | **Disponibilidade** | O servidor de recolha de dados e a base de dados devem operar de forma contínua para evitar a perda de leituras ambientais. | Disponibilidade mínima de 99,5% ao longo do mês. |
+| **RNF06** | **Usabilidade e Responsividade** | A interface web deve adaptar-se a diferentes tamanhos de ecrã, permitindo a gestão tanto em computador como em smartphone no terreno. | Compatibilidade total com resoluções desde 360 px até 1920px. |
 | **RNF07** | **Tolerância a Falhas** | Caso a ligação Wi-Fi da estufa falhe temporariamente, o sistema não deve perder a consistência dos dados quando a ligação for reposta. | O servidor deve aceitar pacotes com *timestamp* retroativo enviados em lote após reconexão. |
 | **RNF08** | **Manutenibilidade** | O código-fonte do backend e frontend deve seguir boas práticas de arquitetura modular e estar devidamente documentado. | Documentação da API via Swagger/OpenAPI e repositório versionado em Git. |
