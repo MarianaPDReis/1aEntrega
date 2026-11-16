@@ -43,3 +43,31 @@ Por fim, o produtor acede a uma interface web, via computador ou telemóvel, ond
 Agricultor / Produtor Agrícola (Utilizador Principal): Responsável pela gestão diária da estufa. Utiliza a aplicação para consultar os parâmetros ambientais em tempo real, configurar limites ideais para cada tipo de cultura, receber alertas críticos e controlar os sistemas de rega ou ventilação à distância. 
 
 Administrador de Sistema: Responsável pela gestão de contas de utilizadores, associação inicial dos dispositivos IoT e manutenção técnica da plataforma.
+
+## Guiões de Utilização (User Scenarios / Guiões de Teste) 
+
+Para ilustrar o comportamento esperado do sistema e o fluxo de interação dos utilizadores, apresentam-se dois guiões principais de utilização: 
+
+**Guião 1: Monitorização e Resposta a Alerta de Solo Seco** 
+
+1. O agricultor acede à aplicação web **CultivaInteligente** através do seu smartphone e inicia sessão com as suas credenciais (**RF01**).
+2. No painel principal (*dashboard*), verifica que a "Estufa 1 (Tomates)" apresenta uma temperatura de $26\,^\circ\text{C}$ e humidade do solo de $45\%$ (**RF05**).
+3. Durante a tarde, o sensor de humidade do solo envia uma leitura de $24\%$ para o servidor (**RF03**), valor inferior ao limite mínimo configurado de $30\%$ (**RF07**).
+4. O sistema deteta a anomalia, regista o evento na base de dados e envia imediatamente uma notificação na aplicação e um alerta por e-mail ao agricultor (**RF08**).
+5. O agricultor abre o alerta, consulta o gráfico das últimas 24 horas para confirmar a descida acentuada da humidade (**RF06**) e seleciona a opção "Ativar Rega" na interface web (**RF09**).
+6. O sistema envia o comando ao microcontrolador da estufa, que liga a eletroválvula de rega e atualiza o estado no painel para "Rega Ativa".
+
+**Guião 2: Configuração de Automação e Exportação de Dados** 
+
+1. O agricultor acede às definições da "Estufa 2 (Morangos)" na plataforma web.
+2. Ajusta o limiar de temperatura máxima para $28\,^\circ\text{C}$ e ativa a funcionalidade "Modo Automático de Rega" (**RF07**, **RF10**).
+3. No final do mês, o agricultor acede à secção de "Relatórios", seleciona o intervalo correspondente aos últimos 30 dias e clica em "Exportar CSV" (**RF11**).
+4. O sistema gera e descarrega um ficheiro estruturado com as médias diárias de temperatura e humidade para arquivo e análise da produção.
+
+## Requisitos funcionais 
+
+Fazes uma lista de tudo aquilo que a aplicação deverá permitir fazer. 
+
+## Requisitos não funcionais 
+
+Fazes uma lista das características que a aplicação deverá cumprir. 
