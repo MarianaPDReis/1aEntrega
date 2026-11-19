@@ -80,7 +80,7 @@ Os Requisitos Funcionais descrevem as funcionalidades, comportamentos e regras d
 | **RF10** | **Automação de Rega** | Quando ativado o modo automático pelo utilizador, o sistema deve acionar a rega automaticamente caso a humidade do solo desça abaixo do limite mínimo, desligando-a assim que o valor ideal seja restabelecido. | Média |
 | **RF11** | **Exportação de Relatórios** | O utilizador deve poder exportar os dados históricos de um determinado período em formato CSV ou PDF para análise externa. | Baixa |
 
-## 5. Requisitos Não Funcionais
+## Requisitos Não Funcionais
 
 Os Requisitos Não Funcionais definem os critérios de qualidade, desempenho, segurança e restrições técnicas que o software deve cumprir.
 
@@ -89,7 +89,7 @@ Os Requisitos Não Funcionais definem os critérios de qualidade, desempenho, se
 | **RNF01** | **Desempenho** | O carregamento do painel principal e a atualização dos gráficos históricos devem ser rápidos para garantir uma boa experiência de utilização. | Tempo de resposta inferior a 2 segundos para 95% dos pedidos. |
 | **RNF02** | **Segurança (Comunicação)** | Toda a comunicação entre os dispositivos IoT, o servidor e o navegador do utilizador deve ser cifrada. | Utilização obrigatória do protocolo HTTPS. |
 | **RNF03** | **Segurança (Dados)** | As palavras-passe dos utilizadores não podem ser armazenadas em texto limpo na base de dados. | Utilização de algoritmos seguros. |
-| **RNF04** | **Segurança (API)** | Apenas dispositivos autorizados podem submeter dados de sensores para a API REST. | Autenticação via *API Key* ou *Token JWT* em cada pedido `POST`. |
+| **RNF04** | **Segurança (API)** | Apenas os dispositivos da estufa registados no sistema podem enviar dados para o servidor. | O dispositivo tem de enviar um código de identificação válido sempre que transmite leituras. |
 | **RNF05** | **Disponibilidade** | O servidor de recolha de dados e a base de dados devem operar de forma contínua para evitar a perda de leituras ambientais. | Disponibilidade mínima de 99,5% ao longo do mês. |
 | **RNF06** | **Usabilidade e Responsividade** | A interface web deve adaptar-se a diferentes tamanhos de ecrã, permitindo a gestão tanto em computador como em smartphone no terreno. | Compatibilidade total com resoluções desde 360px até 1920px. |
-| **RNF07** | **Tolerância a Falhas** | Caso a ligação Wi-Fi da estufa falhe temporariamente, o sistema não deve perder a consistência dos dados quando a ligação for reposta. | O servidor deve aceitar pacotes com timestamp retroativo enviados em lote após reconexão. |
+| **RNF07** | **Tolerância a Falhas** | Caso a ligação Wi-Fi da estufa falhe temporariamente, o sistema não deve perder a consistência dos dados quando a ligação for reposta. | O sistema deve aceitar dados guardados com a data e hora originais e enviados todos juntos assim que a ligação voltar. |
